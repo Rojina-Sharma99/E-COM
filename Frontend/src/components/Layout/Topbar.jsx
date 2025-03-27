@@ -3,7 +3,7 @@ import { RiTwitterXLine } from "react-icons/ri";
 import { IoLogoInstagram } from "react-icons/io";
 const Topbar = () => {
   return (
-    <div className="bg-[#800080] text-white">
+    <div className="bg-ecom-purple text-white">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
         <div className="hidden md:flex items-center space-x-4">
           <a href="#" className="hover:text-gray-300">
