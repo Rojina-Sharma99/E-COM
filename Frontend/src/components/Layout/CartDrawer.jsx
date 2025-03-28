@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { IoMdClose } from "react-icons/io";
+import CartContents from '../Cart/CartContents';
 
 const CartDrawer = ({drawerOpen, toggleCartDrawer}) => {
 
@@ -17,6 +18,7 @@ const CartDrawer = ({drawerOpen, toggleCartDrawer}) => {
         <div className='flex-grow p-4 overflow-y-auto'>
             <h2 className='mb-4 text-xl font-semibold'>Shoppingcart</h2>
         {/**Pass acart cartcontent component here */}
+        <CartContents/>
         </div>
 
         {/**Pass acart cartcontent component here */}
