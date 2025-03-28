@@ -3,6 +3,7 @@ import { HiBars3BottomRight, HiOutlineShoppingBag, HiOutlineUser } from "react-i
 import { useState } from "react";
 import SearchBar from "./SearchBar";
 import { IoMdClose } from "react-icons/io";
+import CartDrawer from "../Layout/CartDrawer";
 
 const Navbar = () =>{
     const [drawerOpen, setDrawerOpen] = useState(false); // to open cart
@@ -60,11 +61,12 @@ const Navbar = () =>{
                  <button onClick={toggleNavDrawer} className="md:hidden">
                     <HiBars3BottomRight className="w-6 h-6 text-gray-700"/>
                  </button>
-                 
             </div>
-
-
         </nav>
+
+        {/*Add cart  drawer component */}
+        <CartDrawer drawerOpen={drawerOpen} toggleCartDrawer={toggleCartDrawer}/>
+
 
 
         {/*Add mobile navigation drawer */}
