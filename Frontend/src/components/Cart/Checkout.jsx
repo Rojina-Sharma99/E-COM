@@ -22,25 +22,23 @@ const cart = {
 };
 
 const Checkout = () => {
-    const [checkoutId, setCheckoutId] = useState(null);
-  const [shippingAddress, setShippingAddress] = useState(
-      {
-        firstName: "",
-        lastName: "",
-        address: "",
-        city: "",
-        postalCode: "",
-        country: "",
-        phone: "",
-      }
-    );
+  const [checkoutId, setCheckoutId] = useState(null);
+  const [shippingAddress, setShippingAddress] = useState({
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    postalCode: "",
+    country: "",
+    phone: "",
+  });
 
-    const handleCreateCheckout = (e) =>{
-        e.preventDefault();
+  const handleCreateCheckout = (e) => {
+    e.preventDefault();
 
-        //this will be an async function and this will fetch the api checkout function from backend
-        setCheckoutId(123);
-    };
+    //this will be an async function and this will fetch the api checkout function from backend
+    setCheckoutId(123);
+  };
 
   return (
     <div className="grid grid-cols-1 gap-8 px-6 py-10 mx-auto tracking-tighter lg:grid-cols-2 max-w-7xl">
@@ -82,11 +80,11 @@ const Checkout = () => {
                 type="text"
                 value={shippingAddress.lastName}
                 onChange={(e) => {
-                    setShippingAddress({
-                      ...shippingAddress,
-                      lastName: e.target.value,
-                    });
-                  }}
+                  setShippingAddress({
+                    ...shippingAddress,
+                    lastName: e.target.value,
+                  });
+                }}
                 className="w-full p-2 border rounded"
                 required
               />
@@ -115,11 +113,11 @@ const Checkout = () => {
                 type="text"
                 value={shippingAddress.city}
                 onChange={(e) => {
-                    setShippingAddress({
-                      ...shippingAddress,
-                      city: e.target.value,
-                    });
-                  }}
+                  setShippingAddress({
+                    ...shippingAddress,
+                    city: e.target.value,
+                  });
+                }}
                 className="w-full p-2 border rounded"
                 required
               />
@@ -130,11 +128,11 @@ const Checkout = () => {
                 type="text"
                 value={shippingAddress.postalCode}
                 onChange={(e) => {
-                    setShippingAddress({
-                      ...shippingAddress,
-                      postalCode: e.target.value,
-                    });
-                  }}
+                  setShippingAddress({
+                    ...shippingAddress,
+                    postalCode: e.target.value,
+                  });
+                }}
                 className="w-full p-2 border rounded"
                 required
               />
@@ -175,18 +173,17 @@ const Checkout = () => {
 
           <div className="mt-6">
             {!checkoutId ? (
-                <button
-              className=" w-full py-3 text-white bg-black rounded"
-              type="submit"
-            >
-              Continue to Payment
-            </button>
-            ): (
-                <div>
-                    <h3>Pay with Paypal</h3>
-                </div>
+              <button
+                className=" w-full py-3 text-white bg-black rounded"
+                type="submit"
+              >
+                Continue to Payment
+              </button>
+            ) : (
+              <div>
+                <h3>Pay with Paypal</h3>
+              </div>
             )}
-            
           </div>
         </form>
       </div>
