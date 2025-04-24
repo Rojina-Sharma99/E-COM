@@ -7,6 +7,8 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Checkout from "./components/Cart/checkout";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
+import MyOrdersPage from "./pages/MyOrdersPage";
+import OrderDetailsPage from "./pages/OrderDetailsPage";
 
 const App = () => {
   return (
@@ -26,6 +28,8 @@ const App = () => {
           <Route path="checkout" element={<Checkout />} />
           {/**Add rouite for orderconformation  */}
           <Route path="order-confirmation" element={<OrderConfirmationPage/>} />
+          <Route path="my-orders" element={<MyOrdersPage/>}/>
+          <Route path="order/:id" element={<OrderDetailsPage/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
