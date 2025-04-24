@@ -1,4 +1,6 @@
 import { useState } from "react";
+import PayPalButton from "./PayPalButton";
+import { useNavigate } from "react-router-dom";
 
 const cart = {
   products: [
@@ -7,7 +9,7 @@ const cart = {
       size: "M",
       color: "black",
       price: 120,
-      image: "https://piscum.photos/150?random=1",
+      image: "https://picsum.photos/150?random=1",
     },
 
     {
@@ -15,13 +17,14 @@ const cart = {
       size: "L",
       color: "white",
       price: 75,
-      image: "https://piscum.photos/150?random=2",
+      image: "https://picsum.photos/150?random=2",
     },
   ],
   totalPrice: 195,
 };
 
 const Checkout = () => {
+  const navigate = useNavigate();
   const [checkoutId, setCheckoutId] = useState(null);
   const [shippingAddress, setShippingAddress] = useState({
     firstName: "",
@@ -38,6 +41,11 @@ const Checkout = () => {
 
     //this will be an async function and this will fetch the api checkout function from backend
     setCheckoutId(123);
+  };
+
+  const handlePaymentSuccess = () => {
+    console.log("payment sucessful");
+    navigate("/order-confirmation");
   };
 
   return (
@@ -182,10 +190,53 @@ const Checkout = () => {
             ) : (
               <div>
                 <h3>Pay with Paypal</h3>
+                <PayPalButton
+                  amount={100}
+                  onSuccess={handlePaymentSuccess}
+                  onError={(error) => alert("Payment failed, please try again")}
+                />
               </div>
+              //add a paypal button
             )}
           </div>
         </form>
+      </div>
+
+      {/**Right section */}
+      <div className="p-6 rounded-lg bg-gray-50">
+        <h3 className="mb-4 text-lg">Order Summary</h3>
+        <div className="py-4 mb-4 border-t">
+          {cart.products.map((product, index) => (
+            <div
+              key={index}
+              className="flex py-2 border-b justify-between items-start"
+            >
+              <div className="flex items-start">
+                <img src={product.image} alt={product.name} className="object-cover w-20 h-24 mr-4 " />
+                <div>
+                    <h3 className="text-lg">{product.name}</h3>
+                    <p className="text-gray-500">Sizes: {product.size}</p>
+                    <p className="text-gray-500">Color: {product.color}</p>
+                </div>
+              </div>
+              <p>${product.price.toLocaleString()}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex items-center justify-between mb-4 text-lg">
+            <p>Subtotal</p>
+            <p>${cart.totalPrice?.toLocaleString()}</p>
+        </div>
+
+        <div className="flex items-center justify-between mb-4 text-lg">
+            <p>Shipping</p>
+            <p>Free</p>
+        </div>
+        <div className="flex items-center justify-between mb-4 text-lg border-t pt-4 mt-4">
+            <p>Total</p>
+            <p>${cart.totalPrice?.toLocaleString()}</p>
+        </div>
       </div>
     </div>
   );
