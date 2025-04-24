@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const OrderDetailsPage = () => {
   const { id } = useParams();
@@ -20,14 +20,14 @@ const OrderDetailsPage = () => {
       orderItems: [
         {
           productId: "1",
-          name: "Product 1",
+          name: "T-shirt",
           price: 100,
           quantity: 1,
           image: "https://picsum.photos/150?random=1,",
         },
         {
           productId: "2",
-          name: "Product 2",
+          name: " Shirt",
           price: 150,
           quantity: 4,
           image: "https://picsum.photos/150?random=2,",
@@ -88,9 +88,55 @@ const OrderDetailsPage = () => {
             <div>
               <h4 className="mb-2 text-lg font-semibold ">Shipping Info</h4>
               <p>Shipping Method: {orderDetails.paymentMethod}</p>
-              <p>Address:{`${orderDetails.shippingAddress.city}, ${orderDetails.shippingAddress.country}`}</p>
+              <p>
+                Address:
+                {`${orderDetails.shippingAddress.city}, ${orderDetails.shippingAddress.country}`}
+              </p>
             </div>
           </div>
+
+          {/**Product List */}
+          <div>
+            <h4 className="mb-4 text-lg font-semibold">Products</h4>
+            <table className="min-w-full mb-4 text-gray-600">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="  px-4 py-2">Name</th>
+                  <th className="  px-4 py-2">Unit Price</th>
+                  <th className="  px-4 py-2">Quantity</th>
+                  <th className="  px-4 py-2">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orderDetails.orderItems.map((item) => (
+                  <tr key={item.productId} className="border-b">
+                    <td className="flex item-center px-4 py-2">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="object-cover w-12 h-12 mr-4 rounded-lg"
+                      />
+                      <Link
+                        to={`/product/${item.productId}`}
+                        className="text-blue-500 hover:underline"
+                      >
+                        {item.name}
+                      </Link>
+                    </td>
+
+                    <td className="px-8 py-4">${item.price}</td>
+                    <td className="px-8 py-4">${item.quantity}</td>
+                    <td className="px-8 py-4">${item.price * item.quantity}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/**Back to Orders Link */}
+          <Link to="/my-orders" className="text-blue-500 hover:underline">
+            Back to My Orders
+          </Link>
         </div>
       )}
     </div>
