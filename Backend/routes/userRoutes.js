@@ -6,8 +6,12 @@ const User = require("../models/User");
 const router = express.Router();
 
 const jwt = require("jsonwebtoken");
+const { protect } = require("../middleware/authMiddleware");
 
-//
+// @route POST /api/users/register
+// @desc Register a new user
+// @access Public
+
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -46,9 +50,9 @@ router.post("/register", async (req, res) => {
   }
 });
 
-//@route POSt/api/users/login
-//@desc Authentication user
-//@access Public
+// @route POST /api/users/login
+// @desc Authenticate user
+// @access Public
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -90,3 +94,9 @@ router.post("/login", async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
+router.get("/profile", protect, async (req, res) => {
+  res.json(req.user);
+});
+
+module.exports = router;

@@ -4,28 +4,28 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 
 const connectDB = require("./config/db");
+
 const userRoutes = require("./routes/userRoutes");
+
+const productRoutes = require("./routes/productRoutes");
 
 const app = express();
 app.use(express.json());
 
-//to allow cors origin , allowing difference instance fromdifffefent resources
 app.use(cors());
 dotenv.config();
-console.log(process.env.PORT, "PORT");
 
-//define in env file port if not then use 3000 port
 const PORT = process.env.PORT || 3000;
 
 connectDB();
 
-//sending response to get response in index
 app.get("/", (req, res) => {
-  res.send("Welcome to Ecom website API");
+  res.send("Welcome to Fancy API!");
 });
 
 app.use("/api/users", userRoutes);
-//checking to see if port is running
+app.use("/api/products", productRoutes);
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
