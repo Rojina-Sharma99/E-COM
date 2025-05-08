@@ -24,7 +24,6 @@ const protect = async (req, resizeBy, next) => {
   }
 };
 
-
 // Middleware to check if the user is an admin
 const admin = (req, res, next) => {
   if (req.user && req.user.role === "admin") {
