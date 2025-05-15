@@ -3,14 +3,14 @@ const User = require("../models/User");
 
 //Middleware to protect routes
 
-const protect = async (req, resizeBy, next) => {
+const protect = async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
-    req.header.authorization.startsWith["Bearer"]
+    req.headers.authorization.startsWith("Bearer ")
   ) {
     try {
-      token = req.header.authorization.split("")[1];
+      token = req.headers.authorization.split(" ")[1]; //Get a token part
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       req.user = await User.findById(decoded.user.id).select("-password"); // excludes password
