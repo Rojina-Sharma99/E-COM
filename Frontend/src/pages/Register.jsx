@@ -12,7 +12,9 @@ const Register = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const{user, guestId, loading} = useSelector
+
+  const { user, guestId } = useSelector((state) => state.auth);
+  console.log(user, guestId, "user");
 
   useEffect(()=> {
     if(user){

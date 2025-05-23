@@ -2,7 +2,7 @@
 //loading and error
 //initial state
 
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const userFromStorage = localStorage.getItem("userInfo")
@@ -26,6 +26,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData, { rejectWithValue }) => {
     try {
+      
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/users/login`,
         userData
@@ -43,7 +44,7 @@ export const loginUser = createAsyncThunk(
 
 //asyncthunk for user registration
 export const registerUser = createAsyncThunk(
-  "auth/loginUser",
+  "auth/registerUser",
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
@@ -75,46 +76,45 @@ const authSlice = createSlice({
       localStorage.setItem("guestId", state.guestId); // set new guest id in localstorage
     },
 
-    generateNewGuestId: state => {
-        state.guestId = `guest_${new Date().getTime()}`; 
+    generateNewGuestId: (state) => {
+      state.guestId = `guest_${new Date().getTime()}`;
       localStorage.setItem("guestId", state.guestId);
     },
   },
 
-  extraReducers: builder => {
-    builder.addCase(loginUser.pending, state=> {
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
-    })
+      })
 
-    .addCase(loginUser.fulfilled, (state, action)=> {
+      .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-    })
+      })
 
-    .addCase(loginUser.rejected, (state, action)=>{
+      .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
-    })
+      })
 
-
-    .addCase(registerUser.pending, state=> {
+      .addCase(registerUser.pending, (state) => {
         state.loading = true;
         state.error = null;
-    })
+      })
 
-    .addCase(registerUser.fulfilled, (state, action)=> {
+      .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload;
-    })
+      })
 
-    .addCase(registerUser.rejected, (state, action)=>{
+      .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload.message;
-    })
-  }
+        state.error = action.payload.message ;
+      });
+  },
 });
 
-
-export const {logout, generateNewGuestId} = authSlice.actions;
+export const { logout, generateNewGuestId } = authSlice.actions;
 export default authSlice.reducer;
