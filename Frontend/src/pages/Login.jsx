@@ -1,13 +1,29 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import login from "../assets/login.webp";
+
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../redux/slices/authSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user, guestId, loading, error } = useSelector((state) => state.auth);
+  console.log(user, "user");
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(loginUser({ email, password }));
     console.log("User Logged In:", { email, password });
   };
 
@@ -25,6 +41,13 @@ const Login = () => {
           <p className="mb-6 text-center">
             Enter your username and password to login
           </p>
+
+          {/**Error message */}
+          {error && (
+            <div className="text-red-700  border rounded p-2 mb-4 text-sm">
+              {error}
+            </div>
+          )}
 
           <div className="mb-4">
             <label className="block mb-2 text-sm font-semibold">Email</label>
