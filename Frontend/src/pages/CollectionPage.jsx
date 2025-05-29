@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import FilterSidebar from "../components/Products/FilterSidebar";
+import ProductGrid from "../components/Products/ProductGrid";
 
 const CollectionPage = () => {
   const [products, setProducts] = useState([]);
@@ -49,7 +50,7 @@ const CollectionPage = () => {
   }, []);
 
   const handleClickOutside = (e) => {
-    if (sidebarRef.current && sidebarRef.current.conatins(e.target)) {
+    if (sidebarRef.current && !sidebarRef.current.conatins(e.target)) {
       setIsSidebarOpen(false);
     }
   };
@@ -58,7 +59,9 @@ const CollectionPage = () => {
     //add event listner for click
     document.addEventListener("mousedown", handleClickOutside);
     //clean eventlistner on unmount
-    
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   });
 
   return (
@@ -73,8 +76,18 @@ const CollectionPage = () => {
       </button>
 
       {/**filter sidebar */}
-      <div ref={sidebarRef} className={`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <div
+        ref={sidebarRef}
+        className={`${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } w-64 bg-white fixed inset-y-0 left-0 z-50 transition-transform duration-300 lg:static lg:translate-x-0 overflow-y-auto`} //add overflow-y-auto later after sidebar content
+      >
         <FilterSidebar />
+      </div>
+
+      <div className="flex-grow p-4">
+        <h2 className="mb-4 text-2xl uppercase">All Collections</h2>
+        <ProductGrid products={products}/>
       </div>
     </div>
   );
